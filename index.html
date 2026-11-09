@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBI — Sample Sales Snapshot</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&family=IBM+Plex+Mono:wght@500&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow:#FFC400; --ink:#0E1116; --charcoal:#1A1F29; --steel:#8A93A3;
+    --paper:#F7F6F0; --growth:#19C37D; --alert:#FF5A4F; --blue:#4C8DFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--paper);font-family:Montserrat,sans-serif;font-weight:500;padding:32px;min-height:100vh}
+  .wrap{max-width:1100px;margin:0 auto}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+  .logo{display:flex;align-items:center;gap:12px}
+  .icon{width:44px;height:44px;border-radius:10px;background:var(--yellow);display:grid;place-items:center}
+  .brand{font-weight:800;font-size:22px;color:var(--yellow);letter-spacing:.5px}
+  .brand small{display:block;font-size:10px;color:var(--steel);letter-spacing:2px;font-weight:500}
+  .tag{font-family:Cairo,sans-serif;color:var(--steel);font-size:14px}
+  h1{font-weight:800;font-size:28px;margin-bottom:6px}
+  .sub{color:var(--steel);margin-bottom:24px;font-size:14px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+  .card{background:var(--charcoal);border-radius:14px;padding:20px}
+  .card .label{color:var(--steel);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+  .card .val{font-family:'IBM Plex Mono',monospace;font-size:30px;margin:8px 0 4px;color:var(--paper)}
+  .card.hero{border-top:3px solid var(--yellow)}
+  .card.hero .val{color:var(--yellow)}
+  .up{color:var(--growth);font-family:'IBM Plex Mono',monospace;font-size:13px}
+  .down{color:var(--alert);font-family:'IBM Plex Mono',monospace;font-size:13px}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+  @media(max-width:800px){.grid{grid-template-columns:1fr}}
+  h2{font-size:15px;font-weight:800;margin-bottom:16px}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:200px;border-bottom:1px solid #2a303c;padding-bottom:4px}
+  .bar{flex:1;background:var(--steel);border-radius:6px 6px 0 0;position:relative;transition:.2s;cursor:pointer;opacity:.55}
+  .bar.on{background:var(--yellow);opacity:1}
+  .bar:hover{opacity:1}
+  .bar span{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--paper);opacity:0;transition:.2s}
+  .bar:hover span{opacity:1}
+  .months{display:flex;gap:10px;margin-top:6px}
+  .months div{flex:1;text-align:center;font-size:11px;color:var(--steel)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{color:var(--steel);text-align:left;font-weight:500;padding:8px 0;border-bottom:1px solid #2a303c}
+  td{padding:10px 0;border-bottom:1px solid #222834}
+  td.num{font-family:'IBM Plex Mono',monospace;text-align:right}
+  .pill{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px}
+  footer{margin-top:28px;text-align:center;color:var(--steel);font-size:12px}
+  footer b{color:var(--yellow);font-weight:800}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 26 26"><rect x="3" y="14" width="4" height="9" rx="1" fill="#0E1116"/><rect x="11" y="9" width="4" height="14" rx="1" fill="#0E1116"/><rect x="19" y="4" width="4" height="19" rx="1" fill="#0E1116"/><path d="M2 12 L10 6 L16 9 L24 2" stroke="#0E1116" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="brand">SBi<small>SMART BUSINESS INSIGHTS</small></div>
+    </div>
+    <div class="tag">بيانات. رؤية. قرار.</div>
+  </header>
+
+  <h1>Sales Snapshot — Sample</h1>
+  <p class="sub">Illustrative data only · Data. Insight. Decision.</p>
+
+  <section class="kpis">
+    <div class="card hero"><div class="label">Total Sales (SAR)</div><div class="val">4,820,500</div><div class="up">▲ 8.4% vs LM</div></div>
+    <div class="card"><div class="label">Target Achievement</div><div class="val">96.2%</div><div class="down">▼ 3.8% to target</div></div>
+    <div class="card"><div class="label">Invoices</div><div class="val">12,348</div><div class="up">▲ 5.1% vs LM</div></div>
+    <div class="card"><div class="label">Avg. Ticket (SAR)</div><div class="val">390</div><div class="up">▲ 3.1% vs LM</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>Monthly Sales (SAR K)</h2>
+      <div class="bars" id="bars"></div>
+      <div class="months" id="months"></div>
+    </div>
+    <div class="card">
+      <h2>Top Categories</h2>
+      <table>
+        <tr><th>Category</th><th style="text-align:right">Share</th></tr>
+        <tr><td><span class="pill" style="background:#FFC400"></span>Lenses</td><td class="num">42%</td></tr>
+        <tr><td><span class="pill" style="background:#4C8DFF"></span>Frames</td><td class="num">31%</td></tr>
+        <tr><td><span class="pill" style="background:#19C37D"></span>Sunglasses</td><td class="num">17%</td></tr>
+        <tr><td><span class="pill" style="background:#8A93A3"></span>Contact Lenses</td><td class="num">10%</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <footer>Turn numbers into decisions. · <b>@SBIinsights</b></footer>
+</div>
+
+<script>
+  const data = [310,345,330,370,395,410,385,420,440,455,470,482];
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const max = Math.max(...data);
+  const bars = document.getElementById('bars');
+  const m = document.getElementById('months');
+  data.forEach((v,i)=>{
+    const b = document.createElement('div');
+    b.className = 'bar' + (i === data.length-1 ? ' on' : '');
+    b.style.height = (v/max*100) + '%';
+    b.innerHTML = '<span>' + v + '</span>';
+    b.onclick = () => { document.querySelectorAll('.bar').forEach(x=>x.classList.remove('on')); b.classList.add('on'); };
+    bars.appendChild(b);
+    const d = document.createElement('div'); d.textContent = months[i]; m.appendChild(d);
+  });
+</script>
+</body>
+</html>
